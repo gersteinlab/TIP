@@ -1,0 +1,32 @@
+## Note the program is very memory consuming.
+
+# download example wiggle file at http://archive.gersteinlab.org/proj/tftarget/data/R_example_hg18_TFx.wig
+# download Gene annotation file for human (hg18) at http://archive.gersteinlab.org/proj/tftarget/data/R_example_Human-refGene_annotation.txt
+# download functions.R at http://archive.gersteinlab.org/proj/tftarget/data/functions.R
+
+
+
+
+## set up your working directory as where you save the above files
+#--------------------------------------------------------------
+setwd("/home/cc59/TEMP/")
+#--------------------------------------------------------------
+
+## load on the R functions
+source("functions.R")
+
+## calculate weight based on wiggle file
+mywigFile = "R_example_hg18_TFx.wig"
+myannoFile = "R_example_Human-refGene_annotation.txt"
+myoutFile = "weight_for_TFx.txt"
+wig2weight(mywigFile, myannoFile, width=10000, smooth=T, myoutFile)
+
+## calculate the Regulatory scores for all Refseq genes
+mywigFile = "R_example_hg18_TFx.wig"
+myannoFile = "R_example_Human-refGene_annotation.txt"
+myweightFile = "weight_for_TFx.txt"
+myoutFile = "Score_refseq.txt"
+calscoreonwig(mywigFile, myannoFile, myweightFile, myoutFile)
+
+
+
