@@ -17,6 +17,7 @@ wig2weight<-function(wigfilename, annotationfilename, width=10000, smooth=T, out
 	mygene = read.table(annotationfilename, sep="\t", header=T, colClasses=c(rep("character", 3), rep("numeric", 5)))
 	tag = substr(mygene[,1], 1, 3)
 	mygene = mygene[tag=="NM_", 1:5]
+	#care about mRNA, from tts to tts..
 	colnames(mygene) = c("name", "chr", "str", "sta", "end")
 	tmp = mygene$sta
 	tmp1 = tmp-width
@@ -27,6 +28,8 @@ wig2weight<-function(wigfilename, annotationfilename, width=10000, smooth=T, out
 	tmp2[tag==1] = tmp[tag==1]-width 
 	mygene$sta = tmp1
 	mygene$end = tmp2
+	#at the end, consider only -10000 to 10000 around TSS for all NM,
+	#make sure st and ed won't go beyond the boundaries
 	for(k in 1:length(chr.nam))
 	{
 	   tag = mygene$chr==chr.nam[k]
